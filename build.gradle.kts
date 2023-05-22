@@ -4,10 +4,12 @@
  */
 
 import wtf.gofancy.fancygradle.patch.Patch
+import wtf.gofancy.fancygradle.script.extensions.curse
 
 val modVersion: String = "0.0.0"
 val mavenGroup: String = "com.template"
 val archivesBaseName: String = "Template"
+val playerName: String = "your_name"
 
 plugins {
     id("idea")
@@ -37,13 +39,13 @@ minecraft {
     runs {
         create("client") {
             workingDirectory(project.file("client"))
-            args("username", "your_name")
+            args("username", playerName)
             property("forge.logging.console.level", "debug")
             property("forge.logging.markers", "REGISTRIES")
         }
         create("server") {
             workingDirectory(project.file("server"))
-            args("username", "your_name")
+            args("username", playerName)
             property("forge.logging.console.level", "debug")
             property("forge.logging.markers", "REGISTRIES")
         }
@@ -51,7 +53,11 @@ minecraft {
 }
 
 repositories {
-    maven("https://cursemaven.com")
+    maven("https://cursemaven.com") {
+        content {
+            includeGroup("curse.maven")
+        }
+    }
 }
 
 dependencies {
@@ -59,14 +65,14 @@ dependencies {
     minecraft("net.minecraftforge:forge:1.12.2-14.23.5.2860")
     implementation(kotlin("stdlib-jdk8", "1.8.21"))
     //Deobfuscated Dependencies
-    api(fg.deobf("curse.maven:shadowfacts-forgelin-248453:2785465"))
-    implementation(fg.deobf("curse.maven:had-enough-items-557549:4451828"))
-    implementation(fg.deobf("curse.maven:the-one-probe-245211:2667280"))
+    implementation(fg.deobf(curse("shadowfacts-forgelin", 248453, 2785465)))
+    implementation(fg.deobf(curse("had-enough-items", 557549, 4451828)))
+    implementation(fg.deobf(curse("the-one-probe", 245211, 2667280)))
     //Normal Dependencies
-    implementation(fg.deobf("curse.maven:dans-mouse-tweaks-461660:3962479"))
-    implementation(fg.deobf("curse.maven:infinity-item-editor-290958:3802759"))
-    implementation(fg.deobf("curse.maven:itemzoom-261725:2643616"))
-    implementation(fg.deobf("curse.maven:placebo-283644:2694382"))
+    implementation(fg.deobf(curse("dans-mouse-tweaks", 461660, 3962479)))
+    implementation(fg.deobf(curse("infinity-item-editor", 290958, 3802759)))
+    implementation(fg.deobf(curse("itemzoom", 261725, 2643616)))
+    implementation(fg.deobf(curse("placebo", 283644, 2694382)))
 
 }
 
